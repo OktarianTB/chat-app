@@ -1,0 +1,18 @@
+{% from 'form_macros.html' import displayField %}
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Get Started</h1>
+
+    <form action="{{ url_for('main.home') }}", method="POST">
+        {{ displayField(form.username, 'Username') }}
+        {{ displayField(form.password, 'Password') }}
+        {{ displayField(form.password_confirm, 'Confirm Password') }}
+        <div>
+            {{ form.submit }}
+        </div>
+
+        {{ form.csrf_token }}
+    </form>
+
+{% endblock %}
