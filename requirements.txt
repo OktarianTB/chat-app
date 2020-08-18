@@ -3,4 +3,5 @@ wtforms
 Flask==1.0.2
 flask-wtf=0.14
 flask-sqlalchemy
+flask-socketio
 psycopg2
