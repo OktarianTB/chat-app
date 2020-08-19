@@ -16,13 +16,13 @@ def invalid_credentials(form, field):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField("username", validators=[InputRequired(message="Username is required"),
+    username = StringField("Username", validators=[InputRequired(message="Username is required"),
                                                    Length(min=4, max=20, message="Username must be between "
                                                                                  "4 and 20 characters")])
-    password = PasswordField('password', validators=[InputRequired(message="Password is required"),
+    password = PasswordField('Password', validators=[InputRequired(message="Password is required"),
                                                      Length(min=4, max=20, message="Password must be between "
                                                                                    "4 and 20 characters")])
-    password_confirm = PasswordField('password_confirm',
+    password_confirm = PasswordField('Password Confirmation',
                                      validators=[InputRequired(message="Password Confirmation is required"),
                                                  EqualTo("password", message="Passwords must match")])
     submit = SubmitField("Create")
@@ -34,6 +34,6 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField("username", validators=[InputRequired(message="Username is required")])
-    password = PasswordField("password", validators=[InputRequired(message="Password is required"), invalid_credentials])
+    username = StringField("Username", validators=[InputRequired(message="Username is required")])
+    password = PasswordField("Password", validators=[InputRequired(message="Password is required"), invalid_credentials])
     submit = SubmitField("Login")

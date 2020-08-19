@@ -1,17 +1,36 @@
 {% from 'form_macros.html' import displayField %}
 {% extends "base.html" %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}" />
+{% endblock %}
+
 {% block content %}
-    <h1>Login</h1>
+    <div class="mx-auto col-lg-7">
+        {% if get_flashed_messages() %}
+            <br>
+        {% else %}
+            <br><br><br>
+        {% endif%}
 
-    <form action="{{ url_for('main.login') }}", method="POST">
-        {{ displayField(form.username, 'Username') }}
-        {{ displayField(form.password, 'Password') }}
-        <div>
-            {{ form.submit }}
+        <div class="card card-signin my-2">
+            <div class="card-body">
+                <h5 class="card-title text-center">Login with your credentials</h5>
+                <br>
+                <form class="form-signin" action="{{ url_for('main.login') }}", method="POST">
+                    {{ displayField(form.username, 'Username') }}
+                    {{ displayField(form.password, 'Password') }}
+                    <br>
+
+                    <button class="btn btn-google btn-block text-uppercase" type="submit"><i
+                            class="fab fa-google mr-2"></i>Login</button>
+
+
+                    {{ form.csrf_token }}
+                </form>
+            </div>
         </div>
-
-        {{ form.csrf_token }}
-    </form>
+        <br><br><br>
+    </div>
 
 {% endblock %}

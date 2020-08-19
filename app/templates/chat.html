@@ -1,45 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Chat App</title>
-</head>
-<body>
-    <!-- Navigation bar -->
-    <nav>
+{% extends "base.html" %}
 
-    </nav>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chat_page.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}"/>
+{% endblock %}
 
-    <div id="main-section">
-        <!-- Room selection -->
-        <nav id="sidebar">
-            <h4>Rooms</h4>
-            {% for room in rooms %}
-                <p class="select-room">{{ room|title }}</p>
-            {% endfor %}
-        </nav>
+{% block content %}
+<div class="mx-auto col-lg-8">
+    <br><br>
+    <div class="card card-signin my-2">
+        <div class="card-body">
+            <nav class="navbar navbar-expand-lg navbar-light rounded" style="padding: 0px;">
+                <a class="navbar-brand" href="#">Rooms</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09"
+                        aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-        <!-- Message area -->
-        <div id="rightside-panel">
-            <!-- Display message -->
-            <div id="display-message-section">
+                <div class="collapse navbar-collapse" id="navbarsExample09">
+                    <ul class="navbar-nav ml-auto">
+                        {% for room in rooms %}
+                        <li class="nav-item">
+                            <a class="nav-link select-room" href="#">{{ room|title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </nav>
 
+            <hr>
+            <br>
+            <div>
+                <ul id="display-message-section" class="chat-list" style="height: 330px; overflow: auto;">
+<!--                    <li class="in">-->
+<!--                        <div class="chat-body">-->
+<!--                            <div class="chat-message">-->
+<!--                                <h5>Jimmy Willams</h5>-->
+<!--                                <p>Raw denim heard of them tofu master cleanse</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="out">-->
+<!--                        <div class="chat-body">-->
+<!--                            <div class="chat-message">-->
+<!--                                <h5>Serena</h5>-->
+<!--                                <p>Next level veard</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+                </ul>
             </div>
-            <!-- Input message -->
-            <div id="input-area">
-                <input type="text" id="user_message" placeholder="Type here..." autocomplete="off">
-                <button type="button" id="send_message">Send</button>
+            <br><br>
+            <div id="input-area" class="input-group mb-3">
+                <input type="text" id="user_message" class="form-control" placeholder="Type here..."
+                       aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="send_message">Send</button>
+                </div>
             </div>
         </div>
     </div>
+    <br><br><br><br>
+</div>
+<br><br><br>
+</div>
 
-    <!-- Socket IO JS -->
-    <script type="text/javascript">
-        const username = `{{ username }}`;
-    </script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='scripts/chat_page.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/socketio.js') }}"></script>
+<!-- Socket IO JS -->
+<script type="text/javascript">
+    const username = "{{ username }}";
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+        integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='scripts/chat_page.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/socketio.js') }}"></script>
 
-</body>
-</html>
+{% endblock %}

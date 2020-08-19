@@ -31,7 +31,7 @@ def home():
         flash("Registered successfully. Please login!", "success")
         return redirect(url_for("main.login"))
 
-    return render_template("index.html", title="Home", form=form)
+    return render_template("index.html", title="Home", form=form, is_authenticated=current_user.is_authenticated)
 
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -41,7 +41,7 @@ def login():
         user_object = User.query.filter_by(username=form.username.data).first()
         login_user(user_object)
         return redirect(url_for("main.chat"))
-    return render_template("login.html", title="Login", form=form)
+    return render_template("login.html", title="Login", form=form, is_authenticated=current_user.is_authenticated)
 
 
 @main.route('/chat', methods=['GET', 'POST'])
@@ -49,7 +49,8 @@ def chat():
     if not current_user.is_authenticated:
         flash("Please login.", "danger")
         return redirect(url_for("main.login"))
-    return render_template("chat.html", rooms=ROOMS, username=current_user.username)
+    return render_template("chat.html", title="App", rooms=ROOMS, username=current_user.username,
+                           is_authenticated=current_user.is_authenticated)
 
 
 @main.route('/logout', methods=['GET'])
