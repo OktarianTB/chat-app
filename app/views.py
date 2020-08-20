@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect, flash, request, jsonify
+from flask import Blueprint, render_template, url_for, redirect, flash, request, jsonify, make_response
 from time import localtime, strftime
 import requests
 from app.forms import *
@@ -50,6 +50,7 @@ def login():
 
 @main.route('/chat', methods=['GET', 'POST'])
 def chat():
+    get_data_from_db("Lounge")
     if not current_user.is_authenticated:
         flash("Please login.", "danger")
         return redirect(url_for("main.login"))
@@ -79,37 +80,44 @@ def search_gif():
 
 @socketio.on('message')
 def message(data):
-    db_message = Message(room=data["room"], username=current_user.username, content=data["msg"], type="msg")
-    db.session.add(db_message)
-    db.session.commit()
+    send_message_to_db(data["room"], current_user.username, data["msg"], "msg")
     send({"msg": data["msg"], "username": current_user.username, "timestamp": strftime("%b-%d %I:%M%p", localtime())},
          room=data["room"])
 
 
 @socketio.on('gif')
 def send_gif(data):
-    db_message = Message(room=data["room"], username=current_user.username, content=data["url"], type="url")
-    db.session.add(db_message)
-    db.session.commit()
+    send_message_to_db(data["room"], current_user.username, data["url"], "url")
     send({"url": data["url"], "username": current_user.username}, room=data["room"])
 
 
 @socketio.on('join')
 def join(data):
+    message_history_data = get_data_from_db(data["room"])
+    message_history = []
+    for msg in message_history_data:
+        formatted = {"username": msg.username, "content": msg.content, "type": msg.type}
+        message_history.append(formatted)
+    print(message_history)
     message_to_send = current_user.username + " has joined the " + data["room"] + " room."
-    db_message = Message(room=data["room"], username=current_user.username, content=message_to_send, type="info")
-    db.session.add(db_message)
-    db.session.commit()
+
     join_room(data['room'])
-    send({"msg": message_to_send}, room=data["room"])
+    send({"msg": message_to_send, "message_history": message_history, "joiner": current_user.username}, room=data["room"])
 
 
 @socketio.on('leave')
 def leave(data):
     message_to_send = current_user.username + " has left the " + data["room"] + " room."
-    db_message = Message(room=data["room"], username=current_user.username, content=message_to_send, type="info")
-    db.session.add(db_message)
-    db.session.commit()
     leave_room(data['room'])
     send({"msg": message_to_send}, room=data["room"])
 
+
+def send_message_to_db(room, username, content, type):
+    db_message = Message(room=room, username=username, content=content, type=type)
+    db.session.add(db_message)
+    db.session.commit()
+
+
+def get_data_from_db(room):
+    data = Message.query.filter_by(room=room).order_by(Message.id).all()[-8:]
+    return data

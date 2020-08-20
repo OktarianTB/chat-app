@@ -2,6 +2,54 @@ document.addEventListener("DOMContentLoaded", () => {
     joinRoom("Lounge");
 
     socket.on("message", (data) => {
+        if (data.message_history && data.joiner === username ) {
+            document.querySelector("#display-message-section").innerHTML = "";
+            data.message_history.forEach((message) => {
+                let message_data = {"username": message.username};
+                if(message.type === "url"){
+                    message_data.url = message.content;
+                }
+                else if(message.type === "msg"){
+                    message_data.msg = message.content;
+                }
+                processMessage(message_data);
+            });
+        }
+
+        processMessage(data)
+
+        scrollDownChatWindow();
+    });
+
+    document.querySelector("#send_message").onclick = () => {
+        resetError();
+        const message = document.querySelector("#user_message").value;
+        if (message.length > 130) {
+            sendError("Message is too long.");
+        } else if (message.length === 0) {
+            sendError("Message can't be empty.");
+        } else {
+            socket.send({msg: message, room: room});
+            document.querySelector("#user_message").value = "";
+        }
+        document.querySelector("#user_message").focus();
+    };
+
+    document.querySelectorAll(".select-room").forEach((p) => {
+        p.onclick = () => {
+            let newRoom = p.innerHTML;
+            if (newRoom == room) {
+                msg = `You are already in ${room} room.`;
+                printSysMsg(msg);
+            } else {
+                leaveRoom(room);
+                joinRoom(newRoom);
+                room = newRoom;
+            }
+        };
+    });
+
+    function processMessage(data) {
         if (data.url) {
             let markup;
 
@@ -42,37 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             printSysMsg(data.msg);
         }
-
-        scrollDownChatWindow();
-    });
-
-    document.querySelector("#send_message").onclick = () => {
-        resetError();
-        const message = document.querySelector("#user_message").value;
-        if (message.length > 130) {
-            sendError("Message is too long.");
-        } else if (message.length === 0) {
-            sendError("Message can't be empty.");
-        } else {
-            socket.send({msg: message, room: room});
-            document.querySelector("#user_message").value = "";
-        }
-        document.querySelector("#user_message").focus();
-    };
-
-    document.querySelectorAll(".select-room").forEach((p) => {
-        p.onclick = () => {
-            let newRoom = p.innerHTML;
-            if (newRoom == room) {
-                msg = `You are already in ${room} room.`;
-                printSysMsg(msg);
-            } else {
-                leaveRoom(room);
-                joinRoom(newRoom);
-                room = newRoom;
-            }
-        };
-    });
+    }
 
     function sendError(msg) {
         document.querySelector("#user_message").classList.add("is-invalid");

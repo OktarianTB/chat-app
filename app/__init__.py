@@ -24,5 +24,5 @@ def create_app():
     return app
 
 
-def page_not_found():
+def page_not_found(e):
     return redirect(url_for("main.chat"))
