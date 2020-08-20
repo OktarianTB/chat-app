@@ -1,3 +1,4 @@
+requests
 passlib
 wtforms
 Flask==1.0.2

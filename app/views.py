@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, url_for, redirect, flash
+from flask import Blueprint, render_template, url_for, redirect, flash, request, jsonify
 from time import localtime, strftime
+import requests
 from app.forms import *
 from app.models import *
-from app import login_manager, socketio, ROOMS
+from app import login_manager, socketio, ROOMS, Config
 from flask_socketio import send, join_room, leave_room
 from flask_login import login_user, current_user, logout_user
 
@@ -16,6 +17,9 @@ def load_user(id):
 
 @main.route('/', methods=['GET', 'POST'])
 def home():
+    if current_user.is_authenticated:
+        return redirect(url_for("main.chat"))
+
     form = RegistrationForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -60,20 +64,52 @@ def logout():
     return redirect(url_for("main.login"))
 
 
+@main.route('/api/gif', methods=['GET', 'POST'])
+def search_gif():
+    query = request.args.get('query')
+    if not query:
+        query = "chicken"
+
+    payload = {'s': query, 'api_key': Config.GIPHY_KEY, 'weirdness': 7}
+    r = requests.get('http://api.giphy.com/v1/gifs/translate', params=payload)
+    r = r.json()
+    url = r['data']['images']['fixed_height_small']['url']
+    return jsonify(url=url)
+
+
 @socketio.on('message')
 def message(data):
+    db_message = Message(room=data["room"], username=current_user.username, content=data["msg"], type="msg")
+    db.session.add(db_message)
+    db.session.commit()
     send({"msg": data["msg"], "username": current_user.username, "timestamp": strftime("%b-%d %I:%M%p", localtime())},
          room=data["room"])
 
 
+@socketio.on('gif')
+def send_gif(data):
+    db_message = Message(room=data["room"], username=current_user.username, content=data["url"], type="url")
+    db.session.add(db_message)
+    db.session.commit()
+    send({"url": data["url"], "username": current_user.username}, room=data["room"])
+
+
 @socketio.on('join')
 def join(data):
+    message_to_send = current_user.username + " has joined the " + data["room"] + " room."
+    db_message = Message(room=data["room"], username=current_user.username, content=message_to_send, type="info")
+    db.session.add(db_message)
+    db.session.commit()
     join_room(data['room'])
-    send({"msg": current_user.username + " has joined the " + data["room"] + " room."}, room=data["room"])
+    send({"msg": message_to_send}, room=data["room"])
 
 
 @socketio.on('leave')
 def leave(data):
+    message_to_send = current_user.username + " has left the " + data["room"] + " room."
+    db_message = Message(room=data["room"], username=current_user.username, content=message_to_send, type="info")
+    db.session.add(db_message)
+    db.session.commit()
     leave_room(data['room'])
-    send({"msg": current_user.username + " has left the " + data["room"] + " room."}, room=data["room"])
+    send({"msg": message_to_send}, room=data["room"])
 
