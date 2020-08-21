@@ -15,7 +15,6 @@ def create_app():
     app.config.from_object(Config)
 
     db.init_app(app)
-    db.create_all()
     login_manager.init_app(app)
     socketio.init_app(app)
 
