@@ -1,8 +1,10 @@
+click
 requests
 passlib
 wtforms
-Flask==1.0.2
-flask-wtf=0.14
+Flask
+flask-wtf
 flask-sqlalchemy
 flask-socketio
+flask-login
 psycopg2

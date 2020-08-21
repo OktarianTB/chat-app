@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect, flash, request, jsonify, make_response
+from flask import Blueprint, render_template, url_for, redirect, flash, request, jsonify
 from time import localtime, strftime
 import requests
 from app.forms import *
