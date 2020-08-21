@@ -8,3 +8,4 @@ flask-sqlalchemy
 flask-socketio
 flask-login
 psycopg2
+gunicorn
