@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+click = "*"
+requests = "*"
+passlib = "*"
+flask-socketio = "*"
+psycopg2 = "*"
+gunicorn = "*"
+gevent-websocket = "*"
+WTForms = "*"
+Flask = "*"
+Flask-WTF = "*"
+Flask-SQLAlchemy = "*"
+Flask-Login = "*"
+
+[requires]
+python_version = "3.8"
