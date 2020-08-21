@@ -27,7 +27,8 @@ def home():
 
         # Hash password
         hashed_password = pbkdf2_sha512.hash(password)
-
+        if len(hashed_password) > 195:
+            return redirect(url_for("main.home"))
         # Add to db
         user = User(username=username, password=hashed_password)
         db.session.add(user)
