@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request, jsonify
 from time import localtime, strftime
 import requests
-from app.forms import *
-from app.models import *
-from app import login_manager, socketio, ROOMS, Config
+from forms import *
+from models import *
+from application import login_manager, socketio, ROOMS, Config
 from flask_socketio import send, join_room, leave_room
 from flask_login import login_user, current_user, logout_user
 
