@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4d83970399dc9ef07c0d4c08d391cca1c770ae39210252f339b88ffc3c22f5f6"
+            "sha256": "603825590faa9d4ab7eb2f4609ae48c9ae499b31592f4675f3327b7cd8853894"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -143,7 +143,7 @@
                 "sha256:f2a02d9004ccb18edd9eaf6f25da9a7763de41a69754d5e4d872a8cbf8bd0b72",
                 "sha256:f41cc8e853ac2252bc58f6feabd74b8aae613e2d19097c5373463122f4dc08f0"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
+            "index": "pypi",
             "version": "==20.6.2"
         },
         "gevent-websocket": {
@@ -174,7 +174,7 @@
                 "sha256:e695ac8c3efe124d998230b219eb51afb6ef10524a50b3c45109c4b77a8a3a92",
                 "sha256:eac2a3f659d5f41d6bbfb6a97733bc7800ea5e906dc873732e00cebb98cec9e4"
             ],
-            "markers": "platform_python_implementation == 'CPython'",
+            "index": "pypi",
             "version": "==0.4.16"
         },
         "gunicorn": {
@@ -198,7 +198,7 @@
                 "sha256:321b033d07f2a4136d3ec762eac9f16a10ccd60f53c0c91af90217ace7ba1f19",
                 "sha256:b12271b2047cb23eeb98c8b5622e2e5c5e9abd9784a153e9d8ef9cb4dd09d749"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "index": "pypi",
             "version": "==1.1.0"
         },
         "jinja2": {
@@ -206,7 +206,7 @@
                 "sha256:89aab215427ef59c34ad58735269eb58b1a5808103067f7bb9d5836c651b3bb0",
                 "sha256:f0a4641d3cf955324a89c04f3d94663aa4d638abe8f733ecd3582848e1c37035"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
+            "index": "pypi",
             "version": "==2.11.2"
         },
         "markupsafe": {
@@ -245,7 +245,7 @@
                 "sha256:e249096428b3ae81b08327a63a485ad0878de3fb939049038579ac0ef61e17e7",
                 "sha256:e8313f01ba26fbbe36c7be1966a7b7424942f670f38e666995b88d012765b9be"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "index": "pypi",
             "version": "==1.1.1"
         },
         "passlib": {
@@ -288,6 +288,7 @@
                 "sha256:36b33c6aa702d9b6a7f527eec6387a2da1a9a24484ec2f086d76576413cef04b",
                 "sha256:cfded18156862f94544a9f8ef37f56727df731c8552d7023f5afee8369be2db6"
             ],
+            "index": "pypi",
             "version": "==3.13.2"
         },
         "python-socketio": {
@@ -295,6 +296,7 @@
                 "sha256:358d8fbbc029c4538ea25bcaa283e47f375be0017fcba829de8a3a731c9df25a",
                 "sha256:d437f797c44b6efba2f201867cf02b8c96b97dff26d4e4281ac08b45817cd522"
             ],
+            "index": "pypi",
             "version": "==4.6.0"
         },
         "requests": {
@@ -310,7 +312,7 @@
                 "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259",
                 "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "index": "pypi",
             "version": "==1.15.0"
         },
         "sqlalchemy": {
@@ -344,7 +346,7 @@
                 "sha256:f2e8a9c0c8813a468aa659a01af6592f71cd30237ec27c4cc0683f089f90dcfc",
                 "sha256:fe7fe11019fc3e6600819775a7d55abc5446dda07e9795f5954fdbf8a49e1c37"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "index": "pypi",
             "version": "==1.3.19"
         },
         "urllib3": {
@@ -360,7 +362,7 @@
                 "sha256:2de2a5db0baeae7b2d2664949077c2ac63fbd16d98da0ff71837f7d1dea3fd43",
                 "sha256:6c80b1e5ad3665290ea39320b91e1be1e0d5f60652b964a3070216de83d2e47c"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
+            "index": "pypi",
             "version": "==1.0.1"
         },
         "wtforms": {
