@@ -27,10 +27,6 @@ from views import main
 app.register_blueprint(main)
 app.register_error_handler(404, page_not_found)
 
-from commands import create_tables
-app.cli.add_command(create_tables)
-
-
 if __name__ == "__main__":
     print("Running flask app!")
     app.run()
